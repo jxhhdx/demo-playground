@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import Header from './Header.vue'
-import { Repl, ReplStore } from '@vue/repl'
+import { Repl } from '@vue/repl'
+import { ReplStore } from './store'
 import { watchEffect } from 'vue'
+import { atou } from './utils/encode'
 
 const setVH = () => {
   document.documentElement.style.setProperty('--vh', window.innerHeight + `px`)
@@ -11,9 +13,7 @@ setVH()
 
 const store = new ReplStore({
   serializedState: location.hash.slice(1),
-  defaultVueRuntimeURL: import.meta.env.PROD
-    ? `${location.origin}/vue.runtime.esm-browser.js`
-    : `${location.origin}/src/vue-dev-proxy`
+  defaultVueRuntimeURL: import.meta.env.PROD ? undefined : `${location.origin}/src/vue-dev-proxy`
 })
 
 // enable experimental features
